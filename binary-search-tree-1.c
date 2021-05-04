@@ -40,6 +40,7 @@ int main()
 	Node* ptr = NULL;	/* temp */
 
 	do {
+		printf("[----- [고승현] [2016039086] -----]\n");
 		printf("\n\n");
 		printf("----------------------------------------------------------------\n");
 		printf("                   Binary Search Tree #1                        \n");
@@ -125,7 +126,7 @@ int initializeBST(Node** h) {
 }
 
 
-
+/*중위순회를 구현*/
 void inorderTraversal(Node* ptr)
 {
 	if (ptr != NULL) {
@@ -134,7 +135,7 @@ void inorderTraversal(Node* ptr)
 		inorderTraversal(ptr->right);
 	}
 }
-
+/*전위순회 구현*/
 void preorderTraversal(Node* ptr)
 {
 	if (ptr != NULL) {
@@ -143,7 +144,7 @@ void preorderTraversal(Node* ptr)
 		preorderTraversal(ptr->right);
 	}
 }
-
+/*후위순화 구현*/
 void postorderTraversal(Node* ptr)
 {
 	if (ptr != NULL) {
@@ -153,7 +154,9 @@ void postorderTraversal(Node* ptr)
 	}
 }
 
-
+/*새로운 노드를 삽입하는 함수로 루트 노드부터 해당 키값을
+비교하면서 해당 노드의 키값이 들어갈 위치를 찾고
+부모노드와 연결해준다*/
 int insert(Node* head, int key)
 {
 	Node* temp;
@@ -191,7 +194,9 @@ int insert(Node* head, int key)
 	}
 	return 0;
 }
-
+/*리프노드를 삭제하는 함수로 매개변수로 받은 키값과
+반복을 이용해서 비교하면서 일치하는 키값을 찾고 해당노드가
+리프노드일 경우 삭제한다*/
 int deleteLeafNode(Node* head, int key)
 {
 	Node* preview;
@@ -266,7 +271,8 @@ Node* searchIterative(Node* head, int key)
 	return NULL;
 }
 
-
+/*헤드의 주소를 받아서 순회를 이용해서 노드들을 해제해주고
+마지막에는 헤드노드를 판별해서 헤드노드까지 해제해준다*/
 int freeBST(Node* head)
 {
 	if (head == NULL)
