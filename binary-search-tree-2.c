@@ -62,6 +62,7 @@ int main()
 
 	do {
 		printf("\n\n");
+		 printf("[----- [고승현] [2016039086] -----]\n");
 		printf("----------------------------------------------------------------\n");
 		printf("                   Binary Search Tree #2                        \n");
 		printf("----------------------------------------------------------------\n");
@@ -149,6 +150,10 @@ void recursiveInorder(Node* ptr)
 
 /**
  * textbook: p 224s
+ * 반복하여 left에 null이 나올떄 까지 스택에넣는다:L
+ * 그다음 하나를 pop해서 데이터 출력수행:V
+ * 그다음 right로 가서 다시 반복문수행:R
+ * 이런 방식으로 순회를 하면 모든 데이터를 출력하고 종료한다
  */
 void iterativeInorder(Node* node)
 {
@@ -166,6 +171,11 @@ void iterativeInorder(Node* node)
 
 /**
  * textbook: p 225
+ * 큐에 레벨에 맞게 각 데이터를 넣는다
+ * 큐에서 꺼내어 해당 구조체의 data를 출력하고
+ * left와right에 해당하는 주소를 큐에 넣고 
+ * 순서대로 다시 꺼내서 반복수행하여 레벨에 맞게 데이터를 출력한다
+ * 
  */
 void levelOrder(Node* ptr)
 {
@@ -232,7 +242,17 @@ int insert(Node* head, int key)
 	return 1;
 }
 
+/*삭제하고자 하는 구조체를 찾고
+해당 구조체를 찾았다면 해당 구조체에
+우측 트리의 데이터중 가장 작은 데이터를 갖는 노드와 교체를수행
+그리고 해당 노드에 자손여부에 따라 
+리프노드의경우 해당 노드 부모링크를 null로 바꾸고-> 
+삭제하고자 하는 노드free해주고->해당 노드를 삭제한 부모의 link와 연결(이 경우 right와 연결)
+자손이 존재하는 경우 1명의 경우 그자손을 부모로 올리고
+자손이 2명인경우는 나올수가 없다 왜냐하면 최소값을 사용한다는것은 left를 끝까지 가야하므로
+최대자손은 right에서 시작되는 tree의 경우 뿐이다
 
+*/
 int deleteNode(Node* head, int key)
 {
 	Node* select = head->left;
@@ -359,7 +379,9 @@ int freeBST(Node* head)
 }
 
 
-
+/*top가 음이 아닌경우에 pop수행
+음의 겨우에 pop수행하면 empty출력
+ */
 Node* pop()
 {	
 	Node* select;
@@ -374,7 +396,8 @@ Node* pop()
 		return NULL;
 	}
 }
-
+/*stack의 push연산수행 stack의 번호는0번부터 정의하므로
+최대는 max_stack_size-1번까지 가능*/
 void push(Node* aNode)
 {
 	if (top < MAX_STACK_SIZE-1)
@@ -385,7 +408,9 @@ void push(Node* aNode)
 	}
 }
 
-
+/*원형큐의 경우 front의 값을 1증가시켜 해당 배열에 
+데이터가 없으면 해당 큐는 비어있는 상태임을 알아야한다
+다시 원상복귀를 시켜야하다*/
 
 Node* deQueue()
 {
@@ -402,6 +427,8 @@ Node* deQueue()
 	return temp;
 }
 
+/*원형큐의 경우 삽입시 rear의 값을 1증가시켜 front와 
+같은 경우 full로 정의하고 다시 원상복귀시켜주어야한다*/
 void enQueue(Node* aNode)
 {
 	int i = rear;
