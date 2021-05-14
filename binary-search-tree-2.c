@@ -235,7 +235,100 @@ int insert(Node* head, int key)
 
 int deleteNode(Node* head, int key)
 {
-	return 0;
+	Node* select = head->left;
+	Node* prev = head;
+	Node* now = NULL;
+	Node* before = NULL;
+	if (select == NULL)
+		return 0;
+	while (select != NULL) {
+		if (select->key > key) {
+			prev = select;
+			select = select->left;
+		}
+		else if (select->key < key) {
+			prev = select;
+			select = select->right;
+		}
+		else break;
+	}
+	if (select == NULL) {
+		printf("No such data\n");
+		return 0;
+	}
+
+		if (select->left == NULL && select->right == NULL) {
+			if (prev->left == select) {
+				free(select);
+				prev->left = NULL;
+			}
+			else {
+				free(select);
+				prev->right = NULL;
+			}
+		}
+
+		else if (select->left != NULL && select->right != NULL) {
+			now = select->right;
+			before = now;
+			while (now->left != NULL) {
+				before = now;
+				now = now->left;
+			}
+			if (now->right == NULL) {
+				before->left = NULL;
+				now->left = select->left;
+				now->right = select->right;
+				if (prev->right == select) {
+					prev->right = now;
+				}
+				else
+					prev->left = now;
+				free(select);
+			}
+		
+			else {
+				before->left =now->right ;
+				now->left = select->left;
+				now->right = select->right;
+				if (prev->right == select) {
+					prev->right = now;
+				}
+				else
+					prev->left = now;
+				free(select);
+			}
+			if (now->right == now)
+				now->right = NULL;
+			if (now->left == now)
+				now->left == NULL;
+		}
+
+		else {
+			if (select->right != NULL) {
+				if (prev->right == select) {
+					prev->right = select->right;
+					free(select);
+				}
+				else {
+					prev->left = select->right;
+					free(select);
+				}
+			}
+
+			else {
+				if (prev->right == select) {
+					prev->right = select->left;
+					free(select);
+				}
+				else {
+					prev->left = select->left;
+					free(select);
+				}
+			}
+			
+		}
+		
 }
 
 
